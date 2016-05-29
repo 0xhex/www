@@ -20,13 +20,20 @@ $queryForCity = "select * from sale where salesmanID = " . $row["salesman1"] . "
 $result2 = mysqli_query($conn,$queryForCity);
 $productData = [];
 $saleData = [];
+$salesmanData = [];
 while ($row2 = mysqli_fetch_assoc($result2)) {
 	$queryForProduct = "select *  from product where id = " . $row2["productID"];
 	$result3 = mysqli_query($conn,$queryForProduct);
 	$productRow = mysqli_fetch_assoc($result3);
 	if(strlen($productRow["id"]) == 0) continue;
-	$productData [] = array($productRow["id"],mb_convert_encoding($productRow["name"], "UTF-8"));
+	
 	$saleData [] = $row2;
+    
+    $queryForProduct = "select count(id) as countt  from sale where productID = " . $productRow["id"];
+    $result3 = mysqli_query($conn,$queryForProduct);
+    $productCount = mysqli_fetch_assoc($result3);
+    $productData [] = array($productRow["id"],mb_convert_encoding($productRow["name"], "UTF-8"),$productCount["countt"]);
+    
 }
 $marketData[]= array("productData"=>$productData,"saleData"=>$saleData,"marketData"=>array("market"=>$marketName,"marketID"=>$marketID));
 $searchedMarkets[] = $marketRow["name"];

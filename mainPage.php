@@ -23,6 +23,7 @@ print '<span id="responce">
 <script>
 
 var responseArr;
+var arr_selectedMarket;
 var str_selectedCity;
 var str_selectedMarketID;
 var str_selectedMarket;
@@ -63,16 +64,36 @@ function printSalesCounts() {
 	
 	
 }
+    
+function seeProduct(){
+    alert("asd");
+    
+}
+    
+    
 function selectedMarket() {
 	var e = document.getElementById("market");
 	var option = e.options[e.selectedIndex];
 	str_selectedMarketID = option.getAttribute("name");
 	str_selectedMarket = option.value;
-	alert(str_selectedMarketID);
 	document.getElementById('dd').innerHTML = '<input style="float:center; margin-left:12px" onclick="seeProduct();" type="submit" value="Product Data">';
 	document.getElementById('dd').innerHTML += '<input style="float:center; margin-left:12px" onclick="seeSalesman();" type="submit" value="Salesman Data">';
-}
+    
+    for (var k = 0;k<(responseArr[0]).length;k++) {
+        var marketID = JSON.stringify(responseArr[0][k]["marketData"]["marketID"]);
+        if(marketID == ('"' + str_selectedMarketID + '"')){
+            arr_selectedMarket = responseArr[0][k];
+        }
+        
+    }
 
+    
+}
+   
+   
+    
+    
+    
 }
 
 </script>
